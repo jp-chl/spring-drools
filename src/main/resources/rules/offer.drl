@@ -1,0 +1,28 @@
+package KieRule;
+
+import com.jpvr.springdrools.Order;
+
+rule "VISA"
+
+when
+orderObject : Order(cardType=="VISA" && price>1000);
+then
+orderObject.setDiscount(20);
+end;
+
+rule "MASTER"
+
+when
+orderObject : Order(cardType=="MASTER" && price>1500);
+then
+orderObject.setDiscount(10);
+end;
+
+rule "AMEX"
+
+when
+orderObject : Order(cardType=="AMEX" && price>2000);
+then
+orderObject.setDiscount(5);
+end;
+

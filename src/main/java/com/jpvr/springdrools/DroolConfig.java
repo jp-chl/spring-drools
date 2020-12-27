@@ -1,5 +1,6 @@
 package com.jpvr.springdrools;
 
+
 import java.io.IOException;
 
 import org.kie.api.KieServices;
@@ -16,38 +17,42 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DroolConfig {
-    
-    private KieServices kieServices = KieServices.Factory.get();
 
-    private KieFileSystem getKieFileSystem() throws IOException {
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/offer.drl"));
-        return kieFileSystem;
-    }
+	private KieServices kieServices = KieServices.Factory.get();
 
-    @Bean
-    private KieContainer getKieContainer() throws IOException {
-        System.out.println("Container created");
-        getKieRepository();
-        KieBuilder kb = kieServices.newKieBuilder(getKieFileSystem());
-        kb.buildAll();
-        KieModule kieModule = kb.getKieModule();
-        KieContainer kContainer = kieServices.newKieContainer(kieModule.getReleaseId());
-        return kContainer;
-    }
+	private KieFileSystem getKieFileSystem() throws IOException {
+		KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
+		kieFileSystem.write(ResourceFactory.newClassPathResource("rules/offer.drl"));
+		return kieFileSystem;
 
-    private void getKieRepository() {
-        final KieRepository kieRepository = kieServices.getRepository();
-        kieRepository.addKieModule(new KieModule() {
-            public ReleaseId getReleaseId() {
-                return kieRepository.getDefaultReleaseId();
-            }
-        });
-    }
+	}
 
-    @Bean
-    public KieSession getKieSession() throws IOException {
-        System.out.println("Session created");
-        return getKieContainer().newKieSession();
-    }
+	@Bean
+	public KieContainer getKieContainer() throws IOException {
+		System.out.println("Container created...");
+		getKieRepository();
+		KieBuilder kb = kieServices.newKieBuilder(getKieFileSystem());
+		kb.buildAll();
+		KieModule kieModule = kb.getKieModule();
+		KieContainer kContainer = kieServices.newKieContainer(kieModule.getReleaseId());
+		return kContainer;
+
+	}
+
+	private void getKieRepository() {
+		final KieRepository kieRepository = kieServices.getRepository();
+		kieRepository.addKieModule(new KieModule() {
+			public ReleaseId getReleaseId() {
+				return kieRepository.getDefaultReleaseId();
+			}
+		});
+	}
+
+	@Bean
+	public KieSession getKieSession() throws IOException {
+		System.out.println("session created...");
+		return getKieContainer().newKieSession();
+
+	}
+
 }
