@@ -33,3 +33,7 @@ build/
 .vscode/
 .vscode/*
 
+### MAC specfics ###
+.DS_Store
+
+

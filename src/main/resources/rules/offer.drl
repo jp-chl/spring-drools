@@ -7,7 +7,7 @@ rule "VISA"
 when
 orderObject : Order(cardType=="VISA" && price>1000);
 then
-orderObject.setDiscount(20);
+orderObject.setDiscount(40);
 end;
 
 rule "MASTER"
