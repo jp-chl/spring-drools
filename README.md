@@ -8,7 +8,10 @@
 ## Test
 
 ```bash
-curl -s -w "\n" -X POST -H 'Content-Type: application/json' -d '{"name":"Mobile","cardType":"VISA","price":1001}' http://localhost:8080/order | jq
+curl -s -w "\n" \
+-X POST -H 'Content-Type: application/json' \
+-d '{"name":"Mobile","cardType":"BC","price":4001}' \
+http://localhost:8080/order | jq
 ```
 Pay attention to ```discount``` field in response. You should receive something like:
 ```json
